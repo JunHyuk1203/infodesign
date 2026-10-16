@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAILLINK | 차세대 스마트 기차 예매 플랫폼</title>
+  <meta name="description" content="미니멀하고 직관적인 차세대 기차 예매 서비스. 실시간 좌석 확인, 빠른 간편 예매, 스마트 모바일 탑승권 발권.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-logo" id="nav-home-btn" role="button" tabindex="0">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="16" height="16" rx="3"></rect>
+            <path d="M4 11h16"></path>
+            <path d="M12 3v8"></path>
+            <path d="m8 19-2 3"></path>
+            <path d="m16 19 2 3"></path>
+            <circle cx="8" cy="15" r="1"></circle>
+            <circle cx="16" cy="15" r="1"></circle>
+          </svg>
+        </div>
+        <span class="logo-text">RAIL<strong>LINK</strong></span>
+        <span class="logo-badge">NEXT</span>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-link active" id="tab-book-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+          승차권 예매
+        </button>
+        <button class="nav-link" id="tab-tickets-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+          내 승차권 <span class="badge-count" id="header-ticket-count">0</span>
+        </button>
+        <button class="nav-link" id="tab-live-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          열차 운행 현황
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle" title="화면 테마 변경" aria-label="화면 테마 변경">
+          <svg id="theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="user-pill-btn" id="quick-profile-btn">
+          <span class="user-avatar">김</span>
+          <span class="user-name">회원 예매</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="main-content">
+    
+    <!-- View 1: Booking & Search View -->
+    <section id="view-booking" class="view-section active">
+      
+      <!-- Hero Banner & Interactive Search Widget -->
+      <div class="hero-section">
+        <div class="hero-backdrop-glow"></div>
+        <div class="hero-container">
+          <div class="hero-header">
+            <span class="hero-tag">✨ 3초 빠른 스마트 예매</span>
+            <h1 class="hero-title">어디로 떠나시나요?<br><span class="gradient-text">더 빠르고 편안한 기차 여행</span></h1>
+            <p class="hero-desc">KTX, SRT, ITX부터 관광열차까지 전국 모든 열차를 간편하게 예약하세요.</p>
+          </div>
+
+          <!-- Quick Route Chips -->
+          <div class="quick-routes">
+            <span class="quick-label">인기 노선</span>
+            <button class="route-chip" data-dep="서울" data-arr="부산">서울 ⇄ 부산</button>
+            <button class="route-chip" data-dep="용산" data-arr="광주송정">용산 ⇄ 광주송정</button>
+            <button class="route-chip" data-dep="수서" data-arr="동대구">수서 ⇄ 동대구</button>
+            <button class="route-chip" data-dep="청량리" data-arr="강릉">청량리 ⇄ 강릉</button>
+            <button class="route-chip" data-dep="서울" data-arr="대전">서울 ⇄ 대전</button>
+          </div>
+
+          <!-- Master Search Box Card -->
+          <div class="search-card glass-panel">
+            <!-- Trip Type Selector -->
+            <div class="trip-type-tabs">
+              <button class="trip-type-btn active" data-type="oneway">편도 여정</button>
+              <button class="trip-type-btn" data-type="roundtrip">왕복 여정</button>
+              <div class="train-type-filter">
+                <label><input type="radio" name="trainFilter" value="all" checked> 전체</label>
+                <label><input type="radio" name="trainFilter" value="ktx"> KTX / SRT</label>
+                <label><input type="radio" name="trainFilter" value="itx"> ITX-청춘/새마을</label>
+                <label><input type="radio" name="trainFilter" value="mugunghwa"> 무궁화호</label>
+              </div>
+            </div>
+
+            <form id="train-search-form" class="search-form-grid">
+              <!-- Station Segment -->
+              <div class="form-segment station-segment">
+                <div class="station-field" id="dep-station-field">
+                  <span class="field-label">출발역</span>
+                  <div class="station-selector-trigger" tabindex="0" id="dep-station-display">
+                    <span class="station-name" id="dep-station-name">서울</span>
+                    <span class="station-code">SEL</span>
+                  </div>
+                </div>
+
+                <button type="button" class="swap-station-btn" id="swap-stations-btn" title="출발/도착역 전환" aria-label="출발/도착역 전환">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 1 21 5 17 9"></polyline>
+                    <path d="M3 5h18"></path>
+                    <polyline points="7 23 3 19 7 15"></polyline>
+                    <path d="M21 19H3"></path>
+                  </svg>
+                </button>
+
+                <div class="station-field" id="arr-station-field">
+                  <span class="field-label">도착역</span>
+                  <div class="station-selector-trigger" tabindex="0" id="arr-station-display">
+                    <span class="station-name" id="arr-station-name">부산</span>
+                    <span class="station-code">PUS</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Date Segment -->
+              <div class="form-segment date-segment">
+                <div class="input-block">
+                  <label for="travel-date" class="field-label">가는 날짜</label>
+                  <div class="date-picker-wrap">
+                    <input type="date" id="travel-date" class="custom-input date-input" required>
+                    <span class="weekday-badge" id="travel-weekday">오늘</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Passengers Segment -->
+              <div class="form-segment passenger-segment">
+                <div class="input-block">
+                  <span class="field-label">승차 인원</span>
+                  <div class="passenger-dropdown-trigger" id="passenger-trigger" tabindex="0">
+                    <div class="passenger-info-text">
+                      <strong id="passenger-summary-text">성인 1명</strong>
+                      <span class="passenger-subtext">일반실 기준</span>
+                    </div>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </div>
+
+                  <!-- Passenger Counter Popover -->
+                  <div class="passenger-popover glass-panel" id="passenger-popover">
+                    <div class="counter-row">
+                      <div class="counter-meta">
+                        <span class="counter-title">어른 (만 13세 이상)</span>
+                        <span class="counter-desc">기본 운임</span>
+                      </div>
+                      <div class="stepper">
+                        <button type="button" class="step-btn minus" data-target="adult">-</button>
+                        <span class="step-val" id="adult-count">1</span>
+                        <button type="button" class="step-btn plus" data-target="adult">+</button>
+                      </div>
+                    </div>
+                    <div class="counter-row">
+                      <div class="counter-meta">
+                        <span class="counter-title">어린이 (만 6세 ~ 12세)</span>
+                        <span class="counter-desc">50% 할인</span>
+                      </div>
+                      <div class="stepper">
+                        <button type="button" class="step-btn minus" data-target="child">-</button>
+                        <span class="step-val" id="child-count">0</span>
+                        <button type="button" class="step-btn plus" data-target="child">+</button>
+                      </div>
+                    </div>
+                    <div class="counter-row">
+                      <div class="counter-meta">
+                        <span class="counter-title">경로 (만 65세 이상)</span>
+                        <span class="counter-desc">30% 할인 (평일)</span>
+                      </div>
+                      <div class="stepper">
+                        <button type="button" class="step-btn minus" data-target="senior">-</button>
+                        <span class="step-val" id="senior-count">0</span>
+                        <button type="button" class="step-btn plus" data-target="senior">+</button>
+                      </div>
+                    </div>
+                    <div class="popover-footer">
+                      <button type="button" class="btn-primary-small" id="confirm-passengers-btn">선택 완료</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Search Submit Button -->
+              <div class="form-segment submit-segment">
+                <button type="submit" class="search-submit-btn" id="search-trains-btn">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <span>열차 조회</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Station Selection Modal / Flyout -->
+      <div class="modal-overlay" id="station-modal">
+        <div class="modal-card station-modal-card glass-panel">
+          <div class="modal-header">
+            <h3 class="modal-title" id="station-modal-title">출발역 선택</h3>
+            <button type="button" class="close-modal-btn" id="close-station-modal">&times;</button>
+          </div>
+          <div class="station-search-box">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="station-search-input" placeholder="역명 검색 (예: 서울, 대전, 동대구, 광주...)" autocomplete="off">
+          </div>
+          <div class="station-categories">
+            <button class="cat-pill active" data-cat="major">주요 역</button>
+            <button class="cat-pill" data-cat="gyeongbu">경부선</button>
+            <button class="cat-pill" data-cat="honam">호남/전라선</button>
+            <button class="cat-pill" data-cat="gangwon">강릉/동해선</button>
+          </div>
+          <div class="station-grid" id="station-list-container">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Section: Train Schedule & Seat Selector -->
+      <section class="results-section" id="results-section">
+        <div class="results-container">
+          
+          <!-- Sticky Bar / Query Summary -->
+          <div class="results-top-bar glass-panel">
+            <div class="route-summary">
+              <div class="route-highlight">
+                <span id="summary-dep-name">서울</span>
+                <span class="route-arrow">➔</span>
+                <span id="summary-arr-name">부산</span>
+              </div>
+              <div class="route-meta">
+                <span id="summary-date-text">2026.10.16(금)</span>
+                <span class="meta-dot">•</span>
+                <span id="summary-passenger-text">총 1명</span>
+                <span class="meta-dot">•</span>
+                <span class="schedule-counter" id="train-count-badge">조회 결과 6편</span>
+              </div>
+            </div>
+
+            <!-- Fast Time Filters -->
+            <div class="time-filter-chips">
+              <button class="time-chip active" data-time="all">전체 시간</button>
+              <button class="time-chip" data-time="morning">오전 (06:00 ~ 12:00)</button>
+              <button class="time-chip" data-time="afternoon">오후 (12:00 ~ 18:00)</button>
+              <button class="time-chip" data-time="evening">저녁 (18:00 ~ 24:00)</button>
+            </div>
+          </div>
+
+          <!-- Train Schedule Cards Container -->
+          <div class="train-list-container" id="train-list">
+            <!-- Train Cards dynamically rendered here -->
+          </div>
+
+        </div>
+      </section>
+
+    </section>
+
+    <!-- View 2: My Tickets View -->
+    <section id="view-tickets" class="view-section">
+      <div class="tickets-container">
+        <div class="section-title-wrap">
+          <h2 class="section-title">내 승차권 보관함</h2>
+          <p class="section-desc">예약된 모바일 승차권을 확인하고 역에서 바로 탑승하세요.</p>
+        </div>
+
+        <div class="tickets-grid" id="my-tickets-grid">
+          <!-- Tickets injected here or empty state -->
+        </div>
+      </div>
+    </section>
+
+    <!-- View 3: Live Train Status / Info -->
+    <section id="view-live" class="view-section">
+      <div class="live-container">
+        <div class="section-title-wrap">
+          <h2 class="section-title">실시간 열차 운행 현황</h2>
+          <p class="section-desc">전국 주요 간선 열차의 실시간 정시운행률 및 정차역 안내입니다.</p>
+        </div>
+
+        <div class="live-status-board glass-panel">
+          <div class="board-header">
+            <div class="board-title">
+              <span class="pulse-dot"></span>
+              <strong>경부선 / 호남선 / 강릉선 실시간 모니터링</strong>
+            </div>
+            <span class="sync-time" id="live-sync-time">방금 전 업데이트</span>
+          </div>
+          <div class="live-train-table-wrap">
+            <table class="live-table">
+              <thead>
+                <tr>
+                  <th>열차번호</th>
+                  <th>열차종류</th>
+                  <th>구간</th>
+                  <th>계획 시각</th>
+                  <th>상태</th>
+                  <th>현재 위치</th>
+                </tr>
+              </thead>
+              <tbody id="live-table-body">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Seat Selection Drawer / Modal -->
+  <div class="seat-drawer-overlay" id="seat-drawer-overlay">
+    <div class="seat-drawer-panel glass-panel" id="seat-drawer">
+      <div class="drawer-header">
+        <div class="drawer-train-badge">
+          <span class="badge-type" id="drawer-train-type">KTX-이음 021</span>
+          <span class="drawer-route" id="drawer-train-route">서울 (09:15) ➔ 부산 (11:48)</span>
+        </div>
+        <div class="holding-timer-badge" id="holding-timer-badge">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span id="holding-timer-text">선택 제한 05:00</span>
+        </div>
+        <button type="button" class="close-drawer-btn" id="close-seat-drawer">&times;</button>
+      </div>
+
+      <!-- Coach Selector Tabs -->
+      <div class="coach-tabs-wrapper">
+        <span class="coach-tab-label">호차 선택:</span>
+        <div class="coach-tabs" id="coach-tabs-container">
+          <!-- Car buttons e.g., 1호차(특실), 2호차(일반실), 3호차(일반실)... -->
+        </div>
+      </div>
+
+      <!-- Seat Map Area -->
+      <div class="seat-map-viewport">
+        <div class="train-direction-banner">
+          <span class="train-nose">▲ 전면 (열차 진행 방향)</span>
+        </div>
+
+        <div class="seat-legend">
+          <div class="legend-item"><span class="legend-box available"></span> 예약 가능</div>
+          <div class="legend-item"><span class="legend-box selected"></span> 내가 선택</div>
+          <div class="legend-item"><span class="legend-box reserved"></span> 예약 완료 (선택불가)</div>
+          <div class="legend-item"><span class="legend-box special"></span> 휠체어/특수석</div>
+        </div>
+
+        <div class="seats-layout-grid" id="seats-grid">
+          <!-- Dynamic Seat Map -->
+        </div>
+
+        <div class="train-direction-banner bottom">
+          <span class="train-tail">▼ 후면 (통로 및 화장실)</span>
+        </div>
+      </div>
+
+      <!-- Floating Checkout Action Footer -->
+      <div class="drawer-footer">
+        <div class="selection-summary">
+          <div class="chosen-seats">
+            <span class="summary-label">선택 좌석:</span>
+            <strong id="selected-seats-badge">선택 안 됨</strong>
+          </div>
+          <div class="total-price-wrap">
+            <span class="price-desc">총 결제금액</span>
+            <strong class="total-price" id="total-price-text">0원</strong>
+          </div>
+        </div>
+        <button type="button" class="btn-checkout" id="proceed-checkout-btn" disabled>
+          결제 및 발권 진행하기 ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fast Payment Modal -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-card checkout-modal-card glass-panel">
+      <div class="modal-header">
+        <h3 class="modal-title">간편 예매 & 결제</h3>
+        <button type="button" class="close-modal-btn" id="close-checkout-modal">&times;</button>
+      </div>
+
+      <div class="checkout-body">
+        <!-- Order Overview -->
+        <div class="order-ticket-preview">
+          <div class="preview-route">
+            <span id="pay-route-dep">서울</span>
+            <span class="arrow">➔</span>
+            <span id="pay-route-arr">부산</span>
+          </div>
+          <div class="preview-train" id="pay-train-info">KTX 021호 (2호차 7A, 7B)</div>
+          <div class="preview-date" id="pay-date-info">2026.10.16(금) 09:15 ~ 11:48</div>
+          <div class="preview-fare-row">
+            <span>최종 결제 금액</span>
+            <span class="final-fare" id="pay-final-price">119,600원</span>
+          </div>
+        </div>
+
+        <!-- Passenger Info (Simple Non-member support) -->
+        <div class="checkout-section">
+          <h4 class="checkout-sub">탑승자 정보 (모바일 티켓 수신)</h4>
+          <div class="passenger-inputs-grid">
+            <input type="text" id="cust-name" class="custom-input" placeholder="성명 (예: 김철수)" value="홍길동">
+            <input type="tel" id="cust-phone" class="custom-input" placeholder="휴대폰 번호 (- 없이 입력)" value="010-5829-3312">
+          </div>
+        </div>
+
+        <!-- Quick Payment Methods -->
+        <div class="checkout-section">
+          <h4 class="checkout-sub">결제 수단 선택</h4>
+          <div class="pay-method-grid">
+            <label class="pay-method-card active">
+              <input type="radio" name="payMethod" value="kakaopay" checked>
+              <span class="pay-logo kakaopay">KakaoPay</span>
+              <span class="pay-name">카카오페이</span>
+            </label>
+            <label class="pay-method-card">
+              <input type="radio" name="payMethod" value="tosspay">
+              <span class="pay-logo tosspay">toss pay</span>
+              <span class="pay-name">토스페이</span>
+            </label>
+            <label class="pay-method-card">
+              <input type="radio" name="payMethod" value="naverpay">
+              <span class="pay-logo naverpay">N Pay</span>
+              <span class="pay-name">네이버페이</span>
+            </label>
+            <label class="pay-method-card">
+              <input type="radio" name="payMethod" value="card">
+              <span class="pay-logo card">Credit</span>
+              <span class="pay-name">신용/체크카드</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary-large" id="confirm-payment-btn">
+          <span id="pay-button-amount">119,600원</span> 간편 결제하기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Digital Boarding Pass / Success Modal -->
+  <div class="modal-overlay" id="ticket-modal">
+    <div class="modal-card ticket-modal-card glass-panel">
+      <div class="modal-header ticket-header-wrap">
+        <div class="success-icon-badge">✓</div>
+        <h3 class="modal-title">예매가 완료되었습니다!</h3>
+        <button type="button" class="close-modal-btn" id="close-ticket-modal">&times;</button>
+      </div>
+
+      <!-- Modern E-Ticket Boarding Pass UI -->
+      <div class="boarding-pass-card" id="boarding-pass-print">
+        <div class="pass-top">
+          <div class="pass-brand">
+            <span class="brand-name">RAILLINK SMART TICKET</span>
+            <span class="ticket-status-pill">탑승 확정</span>
+          </div>
+          <div class="pass-train-name" id="ticket-card-train">KTX-산천 042</div>
+        </div>
+
+        <div class="pass-main-journey">
+          <div class="journey-point left">
+            <span class="point-station" id="ticket-card-dep">서울</span>
+            <span class="point-time" id="ticket-card-deptime">09:15</span>
+            <span class="point-date" id="ticket-card-depdate">10.16(금)</span>
+          </div>
+          <div class="journey-middle">
+            <span class="journey-duration" id="ticket-card-duration">2시간 33분</span>
+            <div class="journey-line">
+              <span class="line-dot"></span>
+              <span class="line-train-icon">🚆</span>
+              <span class="line-dot"></span>
+            </div>
+            <span class="journey-type" id="ticket-card-class">일반실</span>
+          </div>
+          <div class="journey-point right">
+            <span class="point-station" id="ticket-card-arr">부산</span>
+            <span class="point-time" id="ticket-card-arrtime">11:48</span>
+            <span class="point-date" id="ticket-card-arrdate">10.16(금)</span>
+          </div>
+        </div>
+
+        <div class="pass-divider">
+          <div class="notch notch-left"></div>
+          <div class="dashed-line"></div>
+          <div class="notch notch-right"></div>
+        </div>
+
+        <div class="pass-seat-details">
+          <div class="detail-col">
+            <span class="detail-label">호차</span>
+            <strong class="detail-val highlight" id="ticket-card-car">2호차</strong>
+          </div>
+          <div class="detail-col">
+            <span class="detail-label">좌석 번호</span>
+            <strong class="detail-val highlight" id="ticket-card-seats">7A, 7B</strong>
+          </div>
+          <div class="detail-col">
+            <span class="detail-label">승차자</span>
+            <strong class="detail-val" id="ticket-card-owner">홍길동</strong>
+          </div>
+          <div class="detail-col">
+            <span class="detail-label">승차권 번호</span>
+            <strong class="detail-val mono" id="ticket-card-no">8492-3810-9128</strong>
+          </div>
+        </div>
+
+        <!-- Realistic QR and Barcode -->
+        <div class="pass-barcode-area">
+          <div class="qr-box">
+            <svg viewBox="0 0 100 100" width="84" height="84">
+              <!-- Crisp vector QR simulation -->
+              <rect x="0" y="0" width="100" height="100" fill="#ffffff" rx="8"></rect>
+              <rect x="10" y="10" width="26" height="26" fill="#0f172a" rx="4"></rect>
+              <rect x="15" y="15" width="16" height="16" fill="#ffffff" rx="2"></rect>
+              <rect x="19" y="19" width="8" height="8" fill="#0f172a"></rect>
+
+              <rect x="64" y="10" width="26" height="26" fill="#0f172a" rx="4"></rect>
+              <rect x="69" y="15" width="16" height="16" fill="#ffffff" rx="2"></rect>
+              <rect x="73" y="19" width="8" height="8" fill="#0f172a"></rect>
+
+              <rect x="10" y="64" width="26" height="26" fill="#0f172a" rx="4"></rect>
+              <rect x="15" y="69" width="16" height="16" fill="#ffffff" rx="2"></rect>
+              <rect x="19" y="73" width="8" height="8" fill="#0f172a"></rect>
+
+              <!-- Data dots -->
+              <rect x="42" y="12" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="52" y="18" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="44" y="28" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="42" y="44" width="8" height="8" fill="#2563eb"></rect>
+              <rect x="54" y="42" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="12" y="44" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="24" y="52" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="64" y="48" width="8" height="8" fill="#0f172a"></rect>
+              <rect x="78" y="56" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="44" y="64" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="54" y="74" width="6" height="6" fill="#0f172a"></rect>
+              <rect x="72" y="72" width="12" height="12" fill="#0f172a"></rect>
+            </svg>
+          </div>
+          <div class="barcode-details">
+            <div class="barcode-lines">
+              <span class="bar w1"></span><span class="bar w2"></span><span class="bar w1"></span><span class="bar w3"></span>
+              <span class="bar w2"></span><span class="bar w1"></span><span class="bar w4"></span><span class="bar w1"></span>
+              <span class="bar w3"></span><span class="bar w2"></span><span class="bar w1"></span><span class="bar w3"></span>
+              <span class="bar w1"></span><span class="bar w4"></span><span class="bar w2"></span><span class="bar w1"></span>
+              <span class="bar w3"></span><span class="bar w1"></span><span class="bar w2"></span><span class="bar w4"></span>
+            </div>
+            <span class="barcode-caption">검표 시 QR 코드를 승무원 또는 게이트에 스캔하세요.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-actions">
+        <button type="button" class="btn-ticket-action" id="download-ticket-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          승차권 저장 / 인쇄
+        </button>
+        <button type="button" class="btn-ticket-action apple-wallet" id="wallet-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 15h0M2 9.5h20"></path></svg>
+          Apple 지갑 추가
+        </button>
+        <button type="button" class="btn-primary-large" id="view-my-tickets-btn">
+          내 승차권 목록 보기
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="app-toast"></div>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">RAILLINK</span>
+          <p>대한민국 차세대 고속철도 통합 예매 및 스마트 모빌리티 서비스</p>
+        </div>
+        <div class="footer-links">
+          <a href="#">열차이용안내</a>
+          <a href="#">환불 및 배상규정</a>
+          <a href="#">유실물 센터</a>
+          <a href="#">개인정보처리방침</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 RAILLINK Corporation. All rights reserved. Designed with modern minimalist architecture.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
